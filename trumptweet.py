@@ -10,10 +10,10 @@ import tweepy
 import simplejson as json
 
 
-def yo(oldest,new_tweets,allsweets):
+def yo(oldest,new_tweets,alltweets):
     while len(new_tweets) > 0:  
         # all subsiquent requests use the max_id param to prevent duplicates
-        new_tweets = api.user_timeline(screen_name = '@realDonaldTrump',count=200,max_id=oldest)
+        new_tweets = api.user_timeline(screen_name = '@realDonaldTrump',count=200,max_id=oldest, tweet_mode='extended')
         
         # save most recent tweets
         alltweets.extend(new_tweets)
@@ -46,7 +46,7 @@ api = tweepy.API(auth)
 alltweets = []  
 
 # make initial request for most recent tweets (200 is the maximum allowed count)
-new_tweets = api.user_timeline(screen_name = '@realDonaldTrump',count=200)
+new_tweets = api.user_timeline(screen_name = '@realDonaldTrump',count=200, tweet_mode='extended')
 
 # save most recent tweets
 alltweets.extend(new_tweets)

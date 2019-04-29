@@ -8,8 +8,9 @@ Created on Sun Apr 28 16:52:44 2019
 
 import simplejson as json
 import re
+from textblob import TextBlob
 
-rawText = []
+mytweets = []
 
 
 def clean_tweet(tweet): 
@@ -22,13 +23,24 @@ def clean_tweet(tweet):
 with open('tweets.json', 'r') as file:
     jsonfile= json.loads(file.read())
     for tweet in jsonfile:
+        print(type(tweet))
+        
         print("TWEET")
         print(tweet)
         print("TWEET TEXT")
-        print(tweet['text'])
+        print(tweet['full_text'])
         print("CLEANED")
-        print(clean_tweet(tweet['text']))
-        rawText.append(clean_tweet(tweet['text']))
+        clean = clean_tweet(tweet['full_text'])
+        tweet["clean_text"] = clean
+        blob = TextBlob(clean)
+        print("SENTIMENT")
+        print(blob.sentiment)
+        tweet["sentiment"] = blob.sentiment
+        mytweets.append(tweet)
+        
+with open('processed_tweets.json', 'w', encoding='utf8') as file:
+    json.dump(mytweets, file, ...)
+        
         
         
 
